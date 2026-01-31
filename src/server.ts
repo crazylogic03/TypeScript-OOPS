@@ -1,2 +1,6 @@
 import App from "./app";
-const app = new App()
+import ProductRoutes from "./routes/product.routes";
+
+const app = new App([new ProductRoutes()]);
+
+app.startServer();
