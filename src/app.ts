@@ -1,43 +1,46 @@
-import express from "express"
-import mongoose from "mongoose"
+import express from "express";
+import mongoose from "mongoose";
+import { Routes } from "./utils/route.interface";
 
-interface App_Interface {
-    startServer(): void
-    connectDB(): void
-    initializeRoutes(): void
-}
+class App {
+    public app: express.Application;
+    public port: string | number;
 
-export default class App implements App_Interface {
-
-    port: number
-    app: express.Application;
-
-    constructor() {
-        this.port = 4000
+    constructor(routes: Routes[]) {
         this.app = express();
-        this.startServer()
-        this.connectDB()
-        this.initializeRoutes()
+        this.port = process.env.PORT || 4000;
+
+        this.connectDB();
+        this.initializeMiddlewares();
+        this.initializeRoutes(routes);
     }
 
-    startServer(): void {
+    public startServer() {
         this.app.listen(this.port, () => {
-            console.log(`Server Ruuning on port ${this.port}`)
-        })
+            console.log(`Server listening on http://localhost:${this.port}`);
+        });
     }
-    async connectDB(): Promise<void> {
+
+    private initializeMiddlewares() {
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: true }));
+    }
+
+    private initializeRoutes(routes: Routes[]) {
+        routes.forEach((route) => {
+            this.app.use("/api/v1", route.router);
+        });
+    }
+
+    private async connectDB() {
         try {
-            await mongoose.connect("")
-            console.log("DataBase Connected")
-
+            const dbUrl = process.env.MONGO_URI || "mongodb://localhost:27017/product_inventory";
+            await mongoose.connect(dbUrl);
+            console.log("DataBase Connected");
+        } catch (err) {
+            console.log("Database connection error:", err);
         }
-        catch (err) {
-            console.log(err)
-        }
-
     }
-    initializeRoutes(): void {
-        this.app.use(express.json())
-    }
-
 }
+
+export default App;
