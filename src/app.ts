@@ -1,4 +1,4 @@
-import express = require("express");
+import express from "express";
 import mongoose from "mongoose";
 import { Routes } from "./utils/route.interface";
 
