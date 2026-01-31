@@ -24,7 +24,7 @@ class ProductController {
 
     public getProductById = async (req: Request, res: Response) => {
         try {
-            const product = await this.productService.getProductById(req.params.id);
+            const product = await this.productService.getProductById(req.params.id as string);
             if (!product) return res.status(404).json({ success: false, message: "Product not found" });
             return res.status(200).json({ success: true, data: product });
         } catch (error: any) {
@@ -34,7 +34,7 @@ class ProductController {
 
     public updateProduct = async (req: Request, res: Response) => {
         try {
-            const product = await this.productService.updateProduct(req.params.id, req.body);
+            const product = await this.productService.updateProduct(req.params.id as string, req.body);
             if (!product) return res.status(404).json({ success: false, message: "Product not found" });
             return res.status(200).json({ success: true, data: product, message: "Product updated successfully" });
         } catch (error: any) {
@@ -44,7 +44,7 @@ class ProductController {
 
     public deleteProduct = async (req: Request, res: Response) => {
         try {
-            const product = await this.productService.deleteProduct(req.params.id);
+            const product = await this.productService.deleteProduct(req.params.id as string);
             if (!product) return res.status(404).json({ success: false, message: "Product not found" });
             return res.status(200).json({ success: true, data: null, message: "Product deleted successfully" });
         } catch (error: any) {
