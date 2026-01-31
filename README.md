@@ -6,7 +6,6 @@
 - **Class-based Architecture**: follows strict OOP patterns (Controllers, Services, Repositories).
 - **Product CRUD**: Create, Read (All/One), Update, Delete.
 - **Advanced Querying**: Pagination, Sorting, Search, Filter by Category & Price.
-- **Mongoose & TypeScript**: Strongly typed schemas and models.
 
 ## Structure
 ```
