@@ -5,7 +5,6 @@ class ProductService {
     public productRepository = new ProductRepository();
 
     public async createProduct(data: Partial<ProductInterface>) {
-        // Add business logic/validation here if needed
         return await this.productRepository.create(data);
     }
 
@@ -47,7 +46,6 @@ class ProductService {
     }
 
     public async deleteProduct(id: string) {
-        // Soft delete
         return await this.productRepository.update(id, { isDeleted: true });
     }
 }
